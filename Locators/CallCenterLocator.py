@@ -1,0 +1,1 @@
+store_menu_btn = "xpath@@//button[@id='store_menus']"

@@ -1,0 +1,1 @@
+cookies_link="xpath@@//li[@class='nav-item']/a[@href='#traditional-cookies']"

@@ -1,0 +1,1 @@
+call_center_tab = "xpath@@//span[contains(text(),'Call Center')]"
