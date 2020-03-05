@@ -40,7 +40,7 @@ class AdminHomePage(PageBase):
             login_obj =self.click_login()
             return login_obj
         except Exception as e:
-            raise Exception("Unable to enter credentials")
+                raise Exception("Unable to enter credentials")
 
 
 

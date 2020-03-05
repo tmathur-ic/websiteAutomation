@@ -1,9 +1,9 @@
 from selenium import webdriver
 import os,sys
 import json
-import requests
 from PageObjectsAdmin.AdminHomePage import AdminHomePage
 from PageObjectsAdmin.AdminLoginPage import AdminLoginPage
+from Static import Constants as const
 import unittest
 from datetime import date
 import pytest
@@ -12,7 +12,7 @@ from datetime import date
 import Utilities.CustomLogger as cl
 import logging
 from Utilities.WebDriver import GetWebdriver
-import allure
+# import allure
 import softest
 
 log = cl.customLogger(logging.INFO)
@@ -35,7 +35,10 @@ class TestAdminLoginPage(softest.TestCase):
         login_obj = AdminLoginPage(driver)
         request.cls.home_obj = home_obj
         request.cls.login_obj = login_obj
+
         request.cls.server = bstk_server
+        request.cls.page = f"https://{bstk_server}.insomniacookies.com/admin/login?"
+        self.home_obj.open(request.cls.page)
         failed_before = request.session.testsfailed
         yield
         if request.session.testsfailed != failed_before:
@@ -49,12 +52,26 @@ class TestAdminLoginPage(softest.TestCase):
         Test if the user directs to call center page
         :return:
         '''
-        page = f"https://{self.server}.insomniacookies.com/admin/login?"
-        self.home_obj.open(page)
         log.info("Enter credentials")
         login_page_obj= self.home_obj.enter_credentials()
-
-        self.soft_assert(self.assertEqual,login_page_obj.click_call_center(),True,"Unable to check store"+page)
+        log.info("Clicking on Call center tab")
+        call_center_obj=login_page_obj.click_call_center()
+        time.sleep(3)
+        log.info("Clicking on Store Menu button")
+        call_center_obj.click_store_menu()
+        time.sleep(7)
+        log.info("Select the store from list")
+        call_center_obj.select_store_from_menu()
+        log.info("Click the load menu button")
+        call_center_obj.click_load_menu()
+        time.sleep(7)
+        log.info("Verifying the title")
+        title = call_center_obj.get_store_title()
+        print(title)
+        flag=False
+        if const.store_name in title:
+            flag =True
+        self.soft_assert(self.assertTrue(flag,"Store name not update"))
         try:
             self.assert_all()
         except Exception as e:

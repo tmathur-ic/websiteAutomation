@@ -3,6 +3,7 @@ import logging
 import Utilities.CustomLogger as cl
 from Static import Constants as const
 import Locators.AdminLoginLocators as loc
+from PageObjectsAdmin.CallCenterTab import  CallCenterTab
 
 log = cl.customLogger(logging.INFO)
 
@@ -22,9 +23,8 @@ class AdminLoginPage(PageBase):
         try:
             log.info("Clicking on Call center tab")
             self.click(loc.call_center_tab)
-            return True
+            return CallCenterTab(self.driver)
         except Exception as e:
             raise Exception ("Unable to click on Call center tab")
-
 
 

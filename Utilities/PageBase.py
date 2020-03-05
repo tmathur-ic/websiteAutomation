@@ -289,7 +289,7 @@ class PageBase():
         """
         element = self.find_element(locator)
         select = Select(element)
-        time.sleep()
+        time.sleep(3)
         select.select_by_visible_text(value)
 
     def select_value_from_dropdown_by_index(self, locator, index):
