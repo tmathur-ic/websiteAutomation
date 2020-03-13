@@ -38,10 +38,6 @@ def pytest_addoption(parser):
                      dest="browser",
                      default="chrome",
                      help="Browser. Valid options are firefox, ie and chrome")
-    parser.addoption("-M", "--browserstack_flag",
-                     dest="browserstack_flag",
-                     default="N",
-                     help="Run the test in Browserstack: Y or N")
     parser.addoption("-V", "--ver",
                      dest="browser_version",
                      help="The version of the browser: a whole number",

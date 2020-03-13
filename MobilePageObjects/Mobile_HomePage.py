@@ -6,7 +6,7 @@ from MobilePageObjects.Mobile_HamburgerMenu import MobileHamburgeMenu
 import Static.Constants as const
 log = cl.customLogger(logging.INFO)
 
-class HomePage(PageBase):
+class MobileHomePage(PageBase):
     '''
     Class for methods of HomePage of mobile view
     '''
@@ -69,3 +69,4 @@ class HomePage(PageBase):
             self.click(loc.order_now_middle)
         except Exception as e:
             raise Exception("Unable to click on Middle order now button")
+

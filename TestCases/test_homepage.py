@@ -1,17 +1,8 @@
-from selenium import webdriver
-import os,sys
-import json
-import requests
-from PageObjects.HomePage import HomePage
-import unittest
-from datetime import date
+from MobilePageObjects.Mobile_HomePage import MobileHomePage
 import pytest
-import time
-from datetime import date
 import Utilities.CustomLogger as cl
 import logging
 from Utilities.WebDriver import GetWebdriver
-import allure
 import softest
 
 log = cl.customLogger(logging.INFO)
@@ -30,7 +21,7 @@ class TestHomePage(softest.TestCase):
         teardown_flag = False
         driver = GetWebdriver.get_webdriver(browser)
         driver.maximize_window()
-        home_obj = HomePage(driver)
+        home_obj = MobileHomePage(driver)
         request.cls.home_obj = home_obj
         request.cls.server = bstk_server
         failed_before = request.session.testsfailed
