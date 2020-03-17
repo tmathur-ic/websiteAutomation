@@ -67,13 +67,13 @@ class MobileOrder(PageBase):
         except Exception as e:
             raise Exception("Unable to select time from dropdown due to " + str(e))
 
-    def enter_address(self):
+    def enter_address(self,address):
         '''
         Method to enter the address
         '''
         try:
             log.info("Enter the address 140 North 16th St, phila pa")
-            self.send_keys(loc.address,const.order_address)
+            self.send_keys(loc.address,address)
         except Exception as e:
             raise Exception ("Unable to enter the address due to " +str(e))
 

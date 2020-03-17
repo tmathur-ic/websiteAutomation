@@ -15,6 +15,7 @@ from MobilePageObjects.Mobile_Gifts import MobileGiftCard
 from MobilePageObjects.Mobile_Order import MobileOrder
 from MobilePageObjects.Mobile_Tracker import MobileTracker
 from MobilePageObjects.Mobile_Gear import MobileGear
+from MobilePageObjects.MobileCatalog import MobileCatalog
 
 log = cl.customLogger(logging.INFO)
 
@@ -27,7 +28,7 @@ class MobileHamburgeMenu(PageBase):
         self.driver = driver
 
 
-    def click_oder(self):
+    def click_order(self):
         '''
         Method to click order
         '''
@@ -53,7 +54,7 @@ class MobileHamburgeMenu(PageBase):
         '''
         try:
             self.click(loc.ship_cookies_link)
-            return MobileShipCookies(self.driver)
+            return MobileCatalog(self.driver)
         except Exception as e:
             raise Exception ("Unable to click on Ship cookies due to "+str(e))
 

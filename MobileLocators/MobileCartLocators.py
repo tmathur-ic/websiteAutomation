@@ -6,6 +6,8 @@ checkout_btn = "xpath@@//button[contains(text(),'Checkout')]"
 edit_product = "xpath@@//div[@class='card clickable']"
 address_input= "xpath@@//div[@class='input-group d-flex']"
 import Static.Constants as const
+from datetime import date
+today = date.today().strftime("%d")
 address_select = f"xpath@@//div[@class='tt-menu']/div/div[contains(text(),'{const.order_address}')]"
 
 

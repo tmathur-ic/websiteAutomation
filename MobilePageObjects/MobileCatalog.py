@@ -16,8 +16,6 @@ class MobileCatalog(PageBase):
         super().__init__(driver)
         self.driver = driver
 
-
-
     def click_product(self,product):
         '''
         Method to click on the product on catalog page
