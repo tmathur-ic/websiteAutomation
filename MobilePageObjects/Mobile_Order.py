@@ -43,6 +43,7 @@ class MobileOrder(PageBase):
         '''
         Method to select date from datepicker
         '''
+
         try:
             log.info("clicking the datepicker widget")
             self.click(loc.date_picker_selector)
@@ -52,19 +53,19 @@ class MobileOrder(PageBase):
             else:
                 self.click(loc.before_12_date)
         except Exception as e:
-            raise Exception ("Unable to select the date from datepicker")
+            raise Exception("Unable to select the date from datepicker")
 
 
-    def select_time_from_dropdown(self,value):
+
+    def select_time_from_dropdown(self, value):
         '''
         Method to select time from dropdown
         '''
         try:
             log.info("Selecting the time from dropdown")
-            self.select_dropdown_option(loc.time_selector_dropdown,value)
+            self.select_dropdown_option(loc.time_selector_dropdown, value)
         except Exception as e:
-            raise Exception ("Unable to select time from dropdown due to "+str(e))
-
+            raise Exception("Unable to select time from dropdown due to " + str(e))
 
     def enter_address(self):
         '''

@@ -1,6 +1,7 @@
 from Utilities.PageBase import PageBase
 import appium.webdriver.webelement
 import MobileLocators.MobileCartLocators as loc
+from MobilePageObjects.MobileCheckout import MobileCheckout
 import Static.Constants as const
 import logging
 import Utilities.CustomLogger as cl
