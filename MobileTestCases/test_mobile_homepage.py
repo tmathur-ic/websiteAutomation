@@ -5,6 +5,7 @@ import Utilities.CustomLogger as cl
 import Static.Constants as const
 import logging
 from Utilities.Mobile_Webdriver import GetWebdriver
+from appium.webdriver.common.mobileby import MobileBy
 import softest
 
 log = cl.customLogger(logging.INFO)
@@ -60,7 +61,7 @@ class TestMobileHomePage(softest.TestCase):
         hamburger_obj=self.home_obj.click_hamburger_menu()
         log.info("Clicking the Order option from menu")
         order_obj = hamburger_obj.click_order()
-        order_obj.enter_address(const.order_address)
+        order_obj.enter_address()
 
 
 

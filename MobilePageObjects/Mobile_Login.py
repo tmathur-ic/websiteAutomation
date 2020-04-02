@@ -2,7 +2,9 @@ from Utilities.PageBase import PageBase
 import logging
 import Utilities.CustomLogger as cl
 import MobileLocators.MobileLoginLocators as loc
+from MobilePageObjects.Mobile_User import MobileUser
 import Static.Constants as const
+import time
 log = cl.customLogger(logging.INFO)
 
 class MobileLogin(PageBase):
@@ -19,6 +21,10 @@ class MobileLogin(PageBase):
         '''
         try:
             log.info("Entering the Customer Email id "+str(email))
+            self.switch_control_to_app()
+            self.driver.find_element_by_id('android:id/button2').click()
+            time.sleep(3)
+            self.switch_control_to_webview()
             self.send_keys(loc.current_user_email,email)
         except Exception as e:
             raise Exception ("Unable to enter the customer email due to "+str(e))
@@ -49,7 +55,10 @@ class MobileLogin(PageBase):
         '''
         try:
             log.info("Clicking on Login Button")
+
+            self.wait_till_element_is_present(loc.login_btn)
             self.click(loc.login_btn)
+            return MobileUser(self.driver)
         except Exception as e:
             raise Exception ("Unable to click on login button due to "+str(e))
 

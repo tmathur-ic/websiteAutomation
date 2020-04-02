@@ -7,6 +7,7 @@ import logging
 import Utilities.CustomLogger as cl
 log = cl.customLogger(logging.INFO)
 from datetime import date
+import time
 
 class MobileOrder(PageBase):
     '''
@@ -67,13 +68,20 @@ class MobileOrder(PageBase):
         except Exception as e:
             raise Exception("Unable to select time from dropdown due to " + str(e))
 
-    def enter_address(self,address):
+    def enter_address(self):
         '''
         Method to enter the address
         '''
         try:
+            time.sleep(5)
+            self.switch_control_to_app()
+            self.driver.find_element_by_id('android:id/button2').click()
+            time.sleep(3)
+            self.switch_control_to_webview()
             log.info("Enter the address 140 North 16th St, phila pa")
-            self.send_keys(loc.address,address)
+            time.sleep(5)
+            self.find_element(loc.address)
+            self.send_keys(loc.address,const.order_address)
         except Exception as e:
             raise Exception ("Unable to enter the address due to " +str(e))
 

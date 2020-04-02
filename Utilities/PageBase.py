@@ -563,6 +563,26 @@ class PageBase():
         """
         return self.driver.current_window_handle
 
+    def switch_control_to_app(self):
+        '''
+        Method to switch control to app
+        '''
+        try:
+            self.driver.switch_to.context('NATIVE_APP')
+        except Exception as e:
+            raise Exception ( "Unable to switch control to app")
+
+
+    def switch_control_to_webview(self):
+        '''
+        Method to switch control to app
+        '''
+        try:
+            webview = self.driver.contexts[1]
+            self.driver.switch_to.context(webview)
+        except Exception as e:
+            raise Exception ( "Unable to switch control to webview")
+
     def get_window_handles(self):
         """
         Returns the list containing handles of all windows within the current session.

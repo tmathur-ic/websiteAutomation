@@ -12,10 +12,10 @@ def browserstack_flag(request):
     "pytest fixture for browserstack flag"
     return request.config.getoption("-M")
 
-@pytest.fixture(scope='class')
-def browser_version(request):
-    "pytest fixture for browser version"
-    return request.config.getoption("-V")
+# @pytest.fixture(scope='class')
+# def browser_version(request):
+#     "pytest fixture for browser version"
+#     return request.config.getoption("-V")
 
 @pytest.fixture(scope='class')
 def platform(request):
@@ -38,10 +38,10 @@ def pytest_addoption(parser):
                      dest="browser",
                      default="chrome",
                      help="Browser. Valid options are firefox, ie and chrome")
-    parser.addoption("-V", "--ver",
-                     dest="browser_version",
-                     help="The version of the browser: a whole number",
-                     default=45)
+    # parser.addoption("-V", "--ver",
+    #                  dest="browser_version",
+    #                  help="The version of the browser: a whole number",
+    #                  default=45)
     parser.addoption("-P", "--platform",
                      dest="platform",
                      help="The operating system: Windows 7, Linux",

@@ -33,6 +33,7 @@ class MobileHamburgeMenu(PageBase):
         Method to click order
         '''
         try:
+            self.wait_till_element_is_present(loc.order_link)
             self.click(loc.order_link)
             return MobileOrder(self.driver)
         except Exception as e:

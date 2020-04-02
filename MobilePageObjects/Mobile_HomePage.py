@@ -1,8 +1,10 @@
 from Utilities.PageBase import PageBase
 import logging
 import Utilities.CustomLogger as cl
+import time
 import MobileLocators.MobileHomePageLocators as loc
 from MobilePageObjects.Mobile_HamburgerMenu import MobileHamburgeMenu
+from MobilePageObjects.Mobile_Loyalty import MobileLoyalty
 import Static.Constants as const
 log = cl.customLogger(logging.INFO)
 
@@ -32,7 +34,9 @@ class MobileHomePage(PageBase):
         :return:
         '''
         try:
+            time.sleep(5)
             log.info("Clicking on Menu Icon")
+            self.wait_till_element_is_present(loc.hamburger_menu_btn)
             self.click(loc.hamburger_menu_btn)
             return MobileHamburgeMenu(self.driver)
         except Exception as e:
@@ -70,3 +74,25 @@ class MobileHomePage(PageBase):
         except Exception as e:
             raise Exception("Unable to click on Middle order now button")
 
+    def click_signup_btn(self):
+        '''
+        Method to click on Sign Up Button
+        '''
+        try:
+            log.info('Clicking on Signup button')
+            self.wait_till_element_is_present(loc.signup_btn)
+            self.click(loc.signup_btn)
+        except Exception as e:
+            raise Exception ("Unable to click on signup button due to "+str(e))
+
+    def click_learn_more(self):
+        '''
+        Method to click on learn more
+        '''
+        try:
+            log.info("Clicking on learn more")
+            self.wait_till_element_is_present(loc.learn_more_btn)
+            self.click(loc.learn_more_btn)
+            return MobileLoyalty(self.driver)
+        except Exception as e:
+            raise Exception("Unable to click on learn more button due to "+str(e))
