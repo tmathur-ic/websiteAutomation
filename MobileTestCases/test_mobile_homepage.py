@@ -1,4 +1,5 @@
 from MobilePageObjects.Mobile_HomePage import MobileHomePage
+from Utilities.PageBase import PageBase
 from MobilePageObjects.Mobile_HamburgerMenu import MobileHamburgeMenu
 import pytest
 import Utilities.CustomLogger as cl
@@ -7,6 +8,10 @@ import logging
 from Utilities.Mobile_Webdriver import GetWebdriver
 from appium.webdriver.common.mobileby import MobileBy
 import softest
+import time
+# import allure_pytest
+import allure
+
 
 log = cl.customLogger(logging.INFO)
 
@@ -26,6 +31,7 @@ class TestMobileHomePage(softest.TestCase):
         home_obj = MobileHomePage(driver)
         request.cls.home_obj = home_obj
         request.cls.server = bstk_server
+
         page = f"https://{request.cls.server}.insomniacookies.com/"
         driver.get(page)
         failed_before = request.session.testsfailed
@@ -36,7 +42,8 @@ class TestMobileHomePage(softest.TestCase):
         if not teardown_flag:
             home_obj.teardown_browser()
 
-    def test_order_guest(self):
+    @allure.story('Order Scenario')
+    def test_order_sixpack_(self):
         '''
         Test Scenario
         1. Go to the Website.
@@ -60,8 +67,54 @@ class TestMobileHomePage(softest.TestCase):
         log.info("Clicking on The Hamburger menu")
         hamburger_obj=self.home_obj.click_hamburger_menu()
         log.info("Clicking the Order option from menu")
+        allure.story("Clicking Order")
         order_obj = hamburger_obj.click_order()
+        allure.step("Enter the Address to order")
         order_obj.enter_address()
+        flag=order_obj.is_delivery_btn_present()
+        time.sleep(3)
+        #self.soft_assert(self.assertEqual(order_obj.is_pickup_btn_present(),True,"Pickup button not present"))
+        self.soft_assert(self.assertEqual, flag, True, "Unable to click Tracker on  ")
+        order_obj.click_delivery_btn()
+        #self.softest(self.assertTrue(flag,"Delivery button not present"))
+        order_obj.confirm_address_continue()
+        order_obj.select_date_from_datepicker()
+        order_obj.select_time_from_dropdown("1:30 PM")
+        catalog_obj=order_obj.click_continue_redirect_catalog()
+        catalog_obj.click_product(const.product_sixpack)
+        catalog_obj.click_pick_for_me_btn()
+        time.sleep(4)
+        cart_obj=catalog_obj.click_add_to_cart_btn()
+        checkout_obj=cart_obj.click_checkout_btn()
+        #checkout_obj.click_add_to_order()
+        checkout_obj.enter_recipient_name(const.receiver_name)
+
+        checkout_obj.enter_recipient_phone_number(const.receiver_number)
+        time.sleep(5)
+        #checkout_obj.click_form(locator="xpath@@//h5[contains(text(),'Recipient Delivery')]")
+        checkout_obj.scroll_down(locator="xpath@@//input[@id='recipient-name']")
+        time.sleep(3)
+        #checkout_obj.click_meet_me_outside()
+        checkout_obj.scroll_down(locator="xpath@@//input[@id='no-contact-delivery-option3']")
+        checkout_obj.click_same_as_above_chkbx()
+        checkout_obj.enter_customer_name(const.customer_name)
+        checkout_obj.enter_customer_phone_number(const.customer_number)
+        time.sleep(3)
+        checkout_obj.enter_customer_email_id(const.customer_email)
+        checkout_obj.scroll_down(locator="xpath@@//input[@id='customer-email']")
+        checkout_obj.click_credit_card()
+        checkout_obj.enter_name_credit_card(const.credit_card_name)
+        checkout_obj.enter_credit_card_number(const.credit_card_number)
+        checkout_obj.enter_credit_card_expiry(const.expiry)
+        checkout_obj.enter_credit_card_cvc(const.cvc)
+        checkout_obj.scroll_down(locator="xpath@@//input[@id='cc-security-code']")
+        thanks_obj=checkout_obj.click_place_order()
+        time.sleep(6)
+        is_thanks = thanks_obj.is_thanks_present()
+        self.soft_assert(self.assertEqual,is_thanks,True,"Thanks message not received")
+
+
+
 
 
 

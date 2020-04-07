@@ -16,6 +16,7 @@ from MobilePageObjects.Mobile_Order import MobileOrder
 from MobilePageObjects.Mobile_Tracker import MobileTracker
 from MobilePageObjects.Mobile_Gear import MobileGear
 from MobilePageObjects.MobileCatalog import MobileCatalog
+import time
 
 log = cl.customLogger(logging.INFO)
 
@@ -33,6 +34,7 @@ class MobileHamburgeMenu(PageBase):
         Method to click order
         '''
         try:
+            time.sleep(3)
             self.wait_till_element_is_present(loc.order_link)
             self.click(loc.order_link)
             return MobileOrder(self.driver)

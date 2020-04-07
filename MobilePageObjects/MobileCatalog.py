@@ -32,6 +32,7 @@ class MobileCatalog(PageBase):
         Method to click on Pick for me button
         '''
         try:
+            self.wait_till_element_is_present(loc.pick_for_me_btn)
             log.info("clicking on Pick for me button")
             self.click(loc.pick_for_me_btn)
         except Exception as e:
@@ -42,6 +43,7 @@ class MobileCatalog(PageBase):
         Method to click on Add to cart button
         '''
         try:
+            self.wait_till_element_is_present(loc.add_to_cart_btn)
             log.info("Clicking on Add to cart button")
             self.click(loc.add_to_cart_btn)
             return MobileCart(self.driver)

@@ -358,6 +358,7 @@ class PageBase():
         except Exception as e:
             raise e
 
+
     def scroll_down(self, locator, wait_time=2):
         """
         Scroll down WebPage
@@ -368,6 +369,19 @@ class PageBase():
         element = self.find_element(locator)
         try:
             element.send_keys(Keys.PAGE_DOWN)
+            self.sleep_in_seconds(wait_time)
+            element.send_keys(Keys.PAGE_DOWN)
+            self.sleep_in_seconds(wait_time)
+        except Exception as e:
+            raise e
+
+    def press_down_key(self,locator,wait_time=2):
+        '''
+        Press the down key on the element
+        '''
+        element = self.find_element(locator)
+        try:
+            element.send_keys(Keys.ARROW_DOWN,Keys.RETURN)
             self.sleep_in_seconds(wait_time)
         except Exception as e:
             raise e
@@ -572,6 +586,15 @@ class PageBase():
         except Exception as e:
             raise Exception ( "Unable to switch control to app")
 
+
+    def hide_keyboard(self):
+        '''
+        Method to hide keyboard
+        '''
+        try:
+            self.driver.hide_keyboard()
+        except Exception as e:
+            raise Exception ("Unable to hide keyboard due to "+str(e))
 
     def switch_control_to_webview(self):
         '''

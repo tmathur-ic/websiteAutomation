@@ -1,11 +1,14 @@
 from Utilities.PageBase import PageBase
 import appium.webdriver.webelement
+from MobilePageObjects.Mobile_Thanks import MobileThanks
 import MobileLocators.MobileCheckoutLocators as loc
 import Static.Constants as const
 import logging
 import Utilities.CustomLogger as cl
 log = cl.customLogger(logging.INFO)
+from selenium.webdriver.common.keys import Keys
 from datetime import date
+import time
 
 class MobileCheckout(PageBase):
     '''
@@ -56,9 +59,18 @@ class MobileCheckout(PageBase):
         try:
             log.info("Clicking the input box to enter the recipient's full name")
             log.info("Entering the full name"+ name)
+            self.wait_till_element_is_present(loc.recipient_full_name_input)
             self.send_keys(loc.recipient_full_name_input,name)
+
         except Exception as e:
             raise Exception ("Unable to enter the recipient's full name due to "+str(e))
+
+    def click_form(self,locator):
+        try:
+            self.wait_till_element_is_present(locator)
+            self.click()
+        except Exception as e:
+            raise Exception ("Unable to click" + str(e))
 
     def enter_recipient_phone_number(self,number):
         '''
@@ -67,7 +79,9 @@ class MobileCheckout(PageBase):
         try:
             log.info("Clicking the phone number input boc")
             log.info("Entering the phono number "+ str(number))
+            self.wait_till_element_is_present(loc.recipient_phone_number_input)
             self.send_keys(loc.recipient_phone_number_input,number)
+            self.hide_keyboard()
         except Exception as e:
             raise Exception ("Unable to enter the recipient's phone number "+str(e))
 
@@ -78,6 +92,7 @@ class MobileCheckout(PageBase):
         try:
             log.info("Clicking the extension input box")
             log.info("Entering the extension number "+ str(ext))
+            self.wait_till_element_is_present(loc.recipient_extension_input)
             self.send_keys(loc.recipient_extension_input,str(ext))
         except Exception as e:
             raise Exception ("Unable to enter the recipient's extension number due to "+str(e))
@@ -99,6 +114,7 @@ class MobileCheckout(PageBase):
         Method to click the deliver to my door checkbox
         '''
         try:
+            self.wait_till_element_is_present(loc.deliver_to_my_door_chkbx)
             log.info("Clicking the Deliver to my door checkbox")
             self.click(loc.deliver_to_my_door_chkbx)
         except Exception as e:
@@ -109,7 +125,9 @@ class MobileCheckout(PageBase):
         Method to click the meet me outside checkbox
         '''
         try:
+            self.wait_till_element_is_present(loc.meet_me_outside_chkbx)
             log.info("Clicking the meet me outside checkbox")
+            time.sleep(3)
             self.click(loc.meet_me_outside_chkbx)
         except Exception as e:
             raise Exception ("Unable to click on meet me outside due to "+str(e))
@@ -133,6 +151,23 @@ class MobileCheckout(PageBase):
             self.send_keys(loc.delivery_message_input,message)
         except Exception as e:
             raise Exception ("Unable to enter the delivery instruction due to "+str(e))
+
+    def scroll_down(self, locator, wait_time=2):
+        """
+        Scroll down WebPage
+        :param locator: locator
+        :param wait_time: time to wait
+        :return:
+        """
+        element = self.find_element(locator)
+        try:
+            element.send_keys(Keys.PAGE_DOWN)
+            self.sleep_in_seconds(wait_time)
+            # element.send_keys(Keys.PAGE_DOWN)
+            # self.sleep_in_seconds(wait_time)
+        except Exception as e:
+            raise e
+
 
     def enter_recpient_instructions(self,message):
         '''
@@ -173,6 +208,7 @@ class MobileCheckout(PageBase):
             log.info("Clicking the phone number input boc")
             log.info("Entering the phono number " + str(number))
             self.send_keys(loc.customer_phone_number_input, number)
+            self.hide_keyboard()
         except Exception as e:
             raise Exception("Unable to enter the customer's phone number " + str(e))
 
@@ -192,8 +228,11 @@ class MobileCheckout(PageBase):
         Method to enter the customer's email id
         '''
         try:
+            self.wait_till_element_is_present(loc.customer_email_input)
             log.info("Entering the email id of the customer")
+            self.sleep_in_seconds(5)
             self.send_keys(loc.customer_email_input,email)
+            self.hide_keyboard()
         except Exception as e:
             raise Exception("Unable to enter the customer email id due to "+str(e))
 
@@ -244,6 +283,7 @@ class MobileCheckout(PageBase):
         try:
             log.info("Entering the Name on Credit card")
             self.send_keys(loc.credit_card_name,name)
+            self.hide_keyboard()
         except Exception as e:
             raise Exception("Unable to Enter the name on credit card due to "+str(e))
 
@@ -254,6 +294,7 @@ class MobileCheckout(PageBase):
         try:
             log.info("Entering the credit card number")
             self.send_keys(loc.credit_card_number,number)
+            self.hide_keyboard()
         except Exception as e:
             raise Exception ("Unable to enter the credit card number due to "+str(e))
 
@@ -264,6 +305,7 @@ class MobileCheckout(PageBase):
         try:
             log.info("Entering the credit card expiration date")
             self.send_keys(loc.credit_card_expiry,exp_date)
+            self.hide_keyboard()
         except Exception as e:
             raise Exception ("Unable to enter the credit card expiration date due to "+str(e))
 
@@ -274,6 +316,7 @@ class MobileCheckout(PageBase):
         try:
             log.info("Entering the credit card CVC Code")
             self.send_keys(loc.credit_card_cvc,cvc)
+            self.hide_keyboard()
         except Exception as e:
             raise  Exception ("Unable to enter the Credit card CVC due to "+str(e))
 
@@ -304,5 +347,6 @@ class MobileCheckout(PageBase):
         try:
             log.info("Clicking on Place order button")
             self.click(loc.place_order_btn)
+            return MobileThanks(self.driver)
         except Exception as e :
             raise Exception ("Unable to click on Place order button due to "+str(e))
