@@ -38,14 +38,14 @@ class TestMobileHomePage(softest.TestCase):
         yield
         if request.session.testsfailed != failed_before:
             teardown_flag = True
+            allure.attach(driver.get_screenshot_as_png())
             home_obj.teardown_browser()
         if not teardown_flag:
             home_obj.teardown_browser()
 
     @allure.story('Order Scenario')
-    def test_order_sixpack_(self):
-        '''
-        Test Scenario
+    @allure.description("""
+          Test Scenario
         1. Go to the Website.
         2. Click on Order Tab.
         3. Enter 140 16th St, phila pa
@@ -61,9 +61,22 @@ class TestMobileHomePage(softest.TestCase):
         13. Enter Delivery Message
         14. Select Payment Method as Credit Card and enter its details.
         15. Click on Place Order.
-        16. Order confirmation page should appear displaying Order summary.+
-        :return:
-        '''
+        16. Order confirmation page should appear displaying Order summary. """)
+    # @allure.step('Clicking Hamburger and order option from menu')
+    # def click_hamburger_and_order(self):
+    #     log.info("Clicking on The Hamburger menu")
+    #     hamburger_obj = self.home_obj.click_hamburlog.info("Clicking on The Hamburger menu")
+    #     hamburger_obj=self.home_obj.click_hamburger_menu()
+    #     log.info("Clicking the Order option from menu")
+    #     order_obj = hamburger_obj.click_order()
+    #     return order_obj
+    #
+    # @allure.step('Entering Address')
+    # def enter_address(self):
+    #     order_obj.enter_address()
+    #
+
+    def test_order_sixpack_(self):
         log.info("Clicking on The Hamburger menu")
         hamburger_obj=self.home_obj.click_hamburger_menu()
         log.info("Clicking the Order option from menu")
@@ -74,7 +87,7 @@ class TestMobileHomePage(softest.TestCase):
         flag=order_obj.is_delivery_btn_present()
         time.sleep(3)
         #self.soft_assert(self.assertEqual(order_obj.is_pickup_btn_present(),True,"Pickup button not present"))
-        self.soft_assert(self.assertEqual, flag, True, "Unable to click Tracker on  ")
+        self.soft_assert(self.assertEqual, flag, False, "Unable to click Tracker on  ")
         order_obj.click_delivery_btn()
         #self.softest(self.assertTrue(flag,"Delivery button not present"))
         order_obj.confirm_address_continue()
@@ -112,6 +125,33 @@ class TestMobileHomePage(softest.TestCase):
         time.sleep(6)
         is_thanks = thanks_obj.is_thanks_present()
         self.soft_assert(self.assertEqual,is_thanks,True,"Thanks message not received")
+
+
+    @allure.description("""
+    1. Go to the Website.
+    2. Click on Order Tab.
+    3. Enter Address 1130 Universiy Blvd, Tuscaloosa, AL 
+    4. Click on Delivery button against a Store.
+    5. Select Date and Time from Calendar.
+    6. Click on Continue.
+    7. On Menu Page, Click The Sugar Rush
+    8. Click on Pick for me.  Cookies should be added to cart.
+    9. Go to Cart.
+    10. Click on Checkout.
+    11. Enter Valid Details under Delivery Info & your Info.
+    12. Enter Delivery Message
+    13. Select locaton as On Campus and then select Dorm from dorm dropdown.
+    14. Select Payment Method as Cash
+    15. Click on Place Order.
+    16. Order confirmation page should appear displaying Order summary.""")
+    def test_second_order(self):
+        log.info("Clicking on The Hamburger menu")
+        hamburger_obj = self.home_obj.click_hamburger_menu()
+        log.info("Clicking the Order option from menu")
+        allure.story("Clicking Order")
+        order_obj = hamburger_obj.click_order()
+        allure.step("Enter the Address to order")
+        order_obj.enter_address(const.address2)
 
 
 
